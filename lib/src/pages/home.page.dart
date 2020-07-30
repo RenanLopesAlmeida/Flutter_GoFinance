@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import '../widgets/charts/chart.dart';
+import '../widgets/transactions/form_transactions.dart';
+import '../widgets/transactions/transaction_list.dart';
 import '../models/transaction.model.dart';
-import '../widgets/form_transactions.dart';
-import '../widgets/transaction_list.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -23,6 +24,19 @@ class _HomePageState extends State<HomePage> {
     //   date: DateTime.now(),
     // ),
   ];
+
+  //get the transactions that happened on last week
+  List<Transaction> get _recentTransactions {
+    return _userTransactions
+        .where(
+          (transaction) => transaction.date.isAfter(
+            DateTime.now().subtract(
+              Duration(days: 7),
+            ),
+          ),
+        )
+        .toList();
+  }
 
   void _addNewTransaction(String transactionTitle, double transactionAmount) {
     final newTransaction = Transaction(
@@ -63,6 +77,7 @@ class _HomePageState extends State<HomePage> {
       floatingActionButton: FloatingActionButton(
         child: Icon(
           Icons.add,
+          size: 32,
           color: Colors.white,
         ),
         tooltip: 'Add a Transaction',
@@ -77,10 +92,13 @@ class _HomePageState extends State<HomePage> {
               width: double.infinity,
               margin: EdgeInsets.only(bottom: 20),
               child: Card(
-                child: Text('CHART'),
+                child: Chart(
+                  recentTransactions: _recentTransactions,
+                ),
               ),
             ),
-            Expanded(
+            Container(
+              height: 350,
               child: TransactionList(
                 transactions: _userTransactions,
               ),

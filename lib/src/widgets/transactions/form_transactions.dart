@@ -32,7 +32,7 @@ class _FormTransactionsState extends State<FormTransactions> {
         elevation: 8,
         child: Container(
           height: 400,
-          padding: EdgeInsets.symmetric(horizontal: 10),
+          padding: EdgeInsets.symmetric(horizontal: 10, vertical: 20),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.end,
             children: <Widget>[
