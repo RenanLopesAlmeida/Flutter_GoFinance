@@ -10,20 +10,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  final List<Transaction> _userTransactions = [
-    // Transaction(
-    //   id: 't1',
-    //   title: 'Hamburguer',
-    //   amount: 45.49,
-    //   date: DateTime.now(),
-    // ),
-    // Transaction(
-    //   id: 't2',
-    //   title: 'New Shoes',
-    //   amount: 78.49,
-    //   date: DateTime.now(),
-    // ),
-  ];
+  final List<Transaction> _userTransactions = [];
 
   //get the transactions that happened on last week
   List<Transaction> get _recentTransactions {
@@ -38,11 +25,12 @@ class _HomePageState extends State<HomePage> {
         .toList();
   }
 
-  void _addNewTransaction(String transactionTitle, double transactionAmount) {
+  void _addNewTransaction(
+      String transactionTitle, double transactionAmount, DateTime chosenDate) {
     final newTransaction = Transaction(
       title: transactionTitle,
       amount: transactionAmount,
-      date: DateTime.now(),
+      date: chosenDate,
       id: DateTime.now().toString(),
     );
 
@@ -84,14 +72,14 @@ class _HomePageState extends State<HomePage> {
         backgroundColor: Theme.of(context).accentColor,
         onPressed: () => this._startAddNewTransaction(context),
       ),
-      body: SafeArea(
+      body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
             Container(
               width: double.infinity,
               margin: EdgeInsets.only(bottom: 20),
-              child: Card(
+              child: Container(
                 child: Chart(
                   recentTransactions: _recentTransactions,
                 ),
